@@ -1,9 +1,11 @@
+"use server";
 import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { FaArrowRight } from "react-icons/fa";
-
+// import getUsername from '../../actions/getUsername';
+import handleFormSubmit from "@/actions/getUsername";
 const Account = async ({ searchParams }) => {
   const sessionData = await getServerSession(authOptions);
   console.log("Session data from account page==>", sessionData);
@@ -16,11 +18,15 @@ const Account = async ({ searchParams }) => {
       <p className="text-sm text-center text-gray-600 mt-4">
         Choose your username
       </p>
-      <form className="flex-inline justify-center mx-auto mt-6">
+      <form
+        action={handleFormSubmit}
+        className="flex-inline justify-center mx-auto mt-6"
+      >
         <div className="max-w-xs mx-auto">
           <input
             // onChange={(e) => setUserName(e.target.value)}
             defaultValue={searchParams?.username}
+            name="username"
             className="block w-full px-4 py-2 outline-none text-slate-500 mx-auto mb-4 border border-gray-300"
             type="text"
             // value={userName}
