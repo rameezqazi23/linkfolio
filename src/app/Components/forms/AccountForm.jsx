@@ -6,11 +6,18 @@ import { ThreeDots } from "react-loader-spinner";
 
 const AccountForm = ({ searchParams }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const handleSubmit = async (formData) => {
     setIsLoading(true);
     try {
       const result = await getUsername(formData);
+
       console.log("check result==>", result);
+      if (result === false) {
+        setError(true);
+      } else {
+        setError(false);
+      }
       setTimeout(() => {
         setIsLoading(false);
       }, 2000);
@@ -38,6 +45,12 @@ const AccountForm = ({ searchParams }) => {
             placeholder="username"
             required
           />
+          {error && (
+            <p className="text-xs text-center text-red-600 py-2">
+              This username is already taken
+            </p>
+          )}
+
           <button
             type="submit"
             className="flex justify-center items-center hover:gap-8 duration-300 gap-4 mx-auto w-full bg-blue-700 text-white py-2 hover:bg-green-600"
