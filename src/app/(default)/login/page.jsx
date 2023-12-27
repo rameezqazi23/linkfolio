@@ -1,5 +1,5 @@
+import LoginWithGoogleBtn from "@/app/Components/buttons/LoginWithGoogleBtn";
 import React from "react";
-import LoginWithGoogleBtn from "../Components/buttons/LoginWithGoogleBtn.jsx";
 
 const SignIn = () => {
   return (

@@ -1,7 +1,11 @@
 import Link from "next/link";
 import HeroForm from "../Components/forms/HeroForm";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-const Home = () => {
+const Home = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
     <main className="pt-32">
       <div className="max-w-md">
@@ -17,8 +21,7 @@ const Home = () => {
           </Link>
         </h3>
       </div>
-      <HeroForm />
-     
+      <HeroForm user={session?.user} />
     </main>
   );
 };

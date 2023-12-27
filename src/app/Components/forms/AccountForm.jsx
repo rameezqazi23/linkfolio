@@ -1,28 +1,27 @@
 "use client";
 import React, { useState } from "react";
 import getUsername from "@/actions/getUsername";
-import { FaArrowRight, FaLaptopHouse } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { ThreeDots } from "react-loader-spinner";
+import { redirect } from "next/navigation";
 
 const AccountForm = ({ searchParams }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
   const handleSubmit = async (formData) => {
     setIsLoading(true);
-    try {
-      const result = await getUsername(formData);
 
-      console.log("check result==>", result);
-      if (result === false) {
-        setError(true);
-      } else {
-        setError(false);
-      }
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-    } catch (error) {
-      console.log(error);
+    const result = await getUsername(formData);
+    console.log("check result==>", result);
+    
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    setError(result === false);
+    if (result) {
+      redirect(`/account?created=${formData.get("username")}`);
     }
   };
 
@@ -43,7 +42,6 @@ const AccountForm = ({ searchParams }) => {
             className="block w-full px-4 py-2 outline-none text-slate-500 mx-auto mb-4 border border-gray-300"
             type="text"
             placeholder="username"
-            required
           />
           {error && (
             <p className="text-xs text-center text-red-600 py-2">

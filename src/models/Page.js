@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
-const UserPageSchema = new mongoose.Schema({
+const UserPageSchema = mongoose.Schema({
     uri: {
         type: String,
         required: true,
         min: 1,
         unique: true,
+    },
+    owner: {
+        type: String,
+        required: true
     }
 }, { timestamps: true })
 

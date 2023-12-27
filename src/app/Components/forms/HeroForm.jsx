@@ -1,10 +1,13 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const HeroForm = () => {
+const HeroForm = ({ user }) => {
   const [userName, setUserName] = useState("");
+  const router = useRouter();
+
+  console.log("This is user", user);
   useEffect(() => {
     if ("localStorage" in window && window.localStorage.getItem("username")) {
       // setUserName(window.localStorage.getItem("username"));
@@ -17,12 +20,18 @@ const HeroForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(`linkfolio.to/${userName}`);
+
     if (userName.length > 0) {
-      window.localStorage.setItem("username", userName);
-      await signIn("google");
-      console.log("Successfully logged In");
+      if (user) {
+        router.push(`/account?username=${userName}`);
+      } else {
+        window.localStorage.setItem("username", userName);
+        await signIn("google");
+        console.log("Successfully logged In");
+      }
     }
   };
+
   return (
     <div>
       <form
