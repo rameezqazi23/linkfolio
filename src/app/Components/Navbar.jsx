@@ -18,17 +18,17 @@ const Navbar = async () => {
               <span className="bg-green-400 px-3">Link</span>Folio
             </Link>
             <nav className="flex items-center gap-4 text-slate-500 text-sm">
-              <Link className="hover:text-green-500 delay-200" href={"/about"}>
+              <Link className="hover:text-green-500 duration-200" href={"/about"}>
                 About
               </Link>
               <Link
-                className="hover:text-green-500 delay-200"
+                className="hover:text-green-500 duration-200"
                 href={"/pricing"}
               >
                 Pricing
               </Link>
               <Link
-                className="hover:text-green-500 delay-200"
+                className="hover:text-green-500 duration-200"
                 href={"/contact"}
               >
                 Contact
@@ -39,7 +39,7 @@ const Navbar = async () => {
             {sessionData ? (
               <>
                 <Link
-                  className="hover:text-green-500 delay-200"
+                  className="hover:text-green-500 duration-200"
                   href={"/account"}
                 >
                   Hello, {sessionData?.user?.name}
@@ -56,13 +56,13 @@ const Navbar = async () => {
             ) : (
               <>
                 <Link
-                  className="hover:text-green-500 delay-200"
+                  className="hover:text-green-500 duration-200"
                   href={"/login"}
                 >
                   Sign in
                 </Link>
                 <Link
-                  className="hover:text-green-500 delay-200"
+                  className="hover:text-green-500 duration-200"
                   href={"/signup"}
                 >
                   Create account
