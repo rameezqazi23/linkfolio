@@ -6,6 +6,7 @@ import PAGE from "@/models/Page";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import mongoose from "mongoose";
+import UserProfileForm from "@/app/Components/forms/UserProfileForm";
 
 const Account = async () => {
   mongoose.connect(process.env.CONNECT_MONGO_URI);
@@ -20,7 +21,11 @@ const Account = async () => {
   const userPage = await PAGE.findOne({ owner: sessionData?.user?.email });
   console.log("UserPage data==>", userPage);
 
-  return <div>{userPage ? <div>{userPage?.uri}</div> : <AccountForm />}</div>;
+  return (
+    <div>
+      {userPage ? <UserProfileForm user={userPage} /> : <AccountForm />}
+    </div>
+  );
 };
 
 export default Account;

@@ -3,14 +3,6 @@ import '../globals.css'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 import AccountSidebar from '../Components/layout/AccountSidebar'
-// import Image from 'next/image';
-// import Link from "next/link";
-// import { FcSettings } from 'react-icons/fc'
-// import { MdAnalytics } from "react-icons/md";
-// import { IoMdArrowRoundBack } from "react-icons/io";
-// import LogoutButton from '../Components/buttons/LogoutButton'
-
-
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,7 +22,7 @@ export default async function AppLayout({ children }) {
           <aside className="bg-[#2c2f32] text-gray-300 w-48 p-4 shadow">
             <AccountSidebar session={session} />
           </aside>
-          <div className='mx-auto px-8 mt-8'>
+          <div className='w-full px-16 mt-8'>
             {children}
           </div>
         </main>

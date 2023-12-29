@@ -3,12 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FcSettings } from "react-icons/fc";
 import { MdAccountCircle, MdAnalytics } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import LogoutButton from "../buttons/LogoutButton";
 import { usePathname } from "next/navigation";
-// import LogoutButton from "../Components/buttons/LogoutButton";
 
 const AccountSidebar = ({ session }) => {
   const path = usePathname();
@@ -29,7 +27,7 @@ const AccountSidebar = ({ session }) => {
         <Link
           className={
             path === "/account"
-              ? "flex justify-center items-center gap-2 text-green-500 font-semibold"
+              ? "flex justify-center items-center gap-2 text-green-500"
               : "flex justify-center items-center gap-2"
           }
           href={"/account"}
@@ -40,7 +38,7 @@ const AccountSidebar = ({ session }) => {
         <Link
           className={
             path === "/analytics"
-              ? "flex justify-center items-center gap-2 text-green-500 font-semibold"
+              ? "flex justify-center items-center gap-2 text-green-500"
               : "flex justify-center items-center gap-2"
           }
           href={"/analytics"}
