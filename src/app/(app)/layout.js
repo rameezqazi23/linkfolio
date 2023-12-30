@@ -3,6 +3,8 @@ import '../globals.css'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 import AccountSidebar from '../Components/layout/AccountSidebar'
+import { Toaster } from "react-hot-toast";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +20,7 @@ export default async function AppLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Toaster />
         <main className='flex min-h-screen'>
           <aside className="bg-[#2c2f32] text-gray-300 w-48 p-4 shadow">
             <AccountSidebar session={session} />

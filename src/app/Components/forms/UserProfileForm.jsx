@@ -4,11 +4,21 @@ import RadioToggler from "../formItems/RadioToggler";
 import Image from "next/image";
 import { FaSave } from "react-icons/fa";
 import userPageAction from "@/actions/userPageAction";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserProfileForm = ({ userPage, session }) => {
+
+  
   const saveUserProfile = async (formData) => {
     console.log("save user profile==>", formData.get("displayName"));
     const result = await userPageAction(formData);
+
+    if (result) {
+      toast.success("Successfully saved changes!");
+    } else {
+      toast.error("This didn't work.");
+    }
+
     console.log("user page data", { result });
   };
 
