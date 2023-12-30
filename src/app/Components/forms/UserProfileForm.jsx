@@ -1,14 +1,20 @@
+"use client";
 import React from "react";
 import RadioToggler from "../formItems/RadioToggler";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Image from "next/image";
+import { FaSave } from "react-icons/fa";
+import userPageAction from "@/actions/userPageAction";
 
-const UserProfileForm = async ({ user }) => {
-  const session = await getServerSession(authOptions);
+const UserProfileForm = ({ userPage, session }) => {
+  const saveUserProfile = async (formData) => {
+    console.log("save user profile==>", formData.get("displayName"));
+    const result = await userPageAction(formData);
+    console.log("user page data", { result });
+  };
+
   return (
     <div className="bg-white">
-      <form>
+      <form action={saveUserProfile}>
         <div className="flex justify-center items-center bg-gray-300 py-16">
           <RadioToggler
             options={[
@@ -18,7 +24,7 @@ const UserProfileForm = async ({ user }) => {
             onChange={() => {}}
           />
         </div>
-        <div className="flex justify-center -mb-8">
+        <div className="flex justify-center -mb-12">
           <Image
             className="rounded-full cursor-pointer border-4 border-white shadow-sm relative bottom-10"
             src={session?.user?.image}
@@ -28,19 +34,40 @@ const UserProfileForm = async ({ user }) => {
           />{" "}
         </div>
         <div className="p-4">
-          <label className="input-label" htmlFor="nameInput">Name</label>
-          <input type="text" placeholder="John Doe" />
-          <label className="input-label" htmlFor="locationInput">Location</label>
-          <input type="text" placeholder="SanFancisco" />
-          <label className="input-label" htmlFor="bioInput">Bio</label>
+          <label className="input-label" htmlFor="nameInput">
+            Name
+          </label>
+          <input
+            className="input-displayName"
+            name="displayName"
+            defaultValue={userPage?.displayName}
+            type="text"
+            placeholder="John Doe"
+          />
+          <label className="input-label" htmlFor="locationInput">
+            Location
+          </label>
+          <input
+            className="input-location"
+            name="location"
+            defaultValue={userPage?.location}
+            type="text"
+            placeholder="SanFancisco"
+          />
+          <label className="input-label" htmlFor="bioInput">
+            Bio
+          </label>
           <textarea
-          
             placeholder="Add your bio..."
-            name=""
-            id=""
+            name="bio"
+            defaultValue={userPage?.bio}
             cols="30"
             rows="2"
           ></textarea>
+          <button className="bg-green-500 w-full text-white text-sm mt-4 py-2 flex gap-2 justify-center items-center hover:gap-4 duration-200">
+            <FaSave size={18} />
+            Save Changes
+          </button>
         </div>
       </form>
     </div>

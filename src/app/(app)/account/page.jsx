@@ -23,7 +23,11 @@ const Account = async () => {
 
   return (
     <div>
-      {userPage ? <UserProfileForm user={userPage} /> : <AccountForm />}
+      {userPage ? (
+        <UserProfileForm userPage={userPage} session={sessionData} />
+      ) : (
+        <AccountForm />
+      )}
     </div>
   );
 };

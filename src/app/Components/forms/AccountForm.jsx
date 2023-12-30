@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import getUsername from "@/actions/getUsername";
 import { FaArrowRight } from "react-icons/fa";
 import { ThreeDots } from "react-loader-spinner";
 import { redirect } from "next/navigation";
+import getUsername from "@/actions/getUsername";
 
 const AccountForm = ({ searchParams }) => {
   const [isLoading, setIsLoading] = useState(false);

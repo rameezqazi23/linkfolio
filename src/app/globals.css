@@ -6,7 +6,8 @@ body {
   @apply bg-[#f5f5f5];
 }
 
-input[type="text"],
+input.input-displayName,
+input.input-location,
 textarea {
   @apply w-full block py-2 px-2 mb-2 outline-none border border-gray-200;
 }
