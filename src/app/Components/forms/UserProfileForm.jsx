@@ -5,6 +5,8 @@ import Image from "next/image";
 import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
+import { RiUploadCloud2Fill } from "react-icons/ri";
+import { BiColor } from "react-icons/bi";
 
 const UserProfileForm = ({ userPage, session }) => {
   const saveUserProfile = async (formData) => {
@@ -25,15 +27,34 @@ const UserProfileForm = ({ userPage, session }) => {
   return (
     <div className="bg-white">
       <form action={saveUserProfile}>
-        <div className="flex justify-center items-center bg-gray-300 py-16">
-          <RadioToggler
-          defaultValue={'image'}
-            options={[
-              { value: "color", icon: "IoColorPalette", label: "Color" },
-              { value: "image", icon: "FaImage", label: "Image" },
-            ]}
-            
-          />
+        <div
+          className="flex justify-center items-center py-16"
+          style={{ backgroundColor: userPage.bgColor }}
+        >
+          <div>
+            <RadioToggler
+              defaultValue={userPage.bgType}
+              options={[
+                { value: "color", icon: "IoColorPalette", label: "Color" },
+                { value: "image", icon: "FaImage", label: "Image" },
+              ]}
+            />
+            <div className="flex justify-center mt-4 bg-white px-1 py-2">
+              {userPage.bgType === "color" && (
+                <div className="flex justify-center items-center gap-2 background-color">
+                  <span className="text-sm">Background color:</span>
+                  <input
+                    className="cursor-pointer outline-none border-none"
+                    type="color"
+                    name="bgColor"
+                    defaultValue={userPage.bgColor}
+                  />
+                  {/* <BiColor size={26} className="cursor-pointer" /> */}
+                </div>
+              )}
+              {userPage.bgType === "image" && <RiUploadCloud2Fill size={30} />}
+            </div>
+          </div>
         </div>
         <div className="flex justify-center -mb-12">
           <Image

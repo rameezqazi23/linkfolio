@@ -11,7 +11,9 @@ const userPageAction = async (formData) => {
         const pageFormData = {
             displayName: formData.get('displayName'),
             location: formData.get('location'),
-            bio: formData.get('bio')
+            bio: formData.get('bio'),
+            bgType: formData.get('bgType'),
+            bgColor: formData.get('bgColor'),
         }
         const pageDoc = await PAGE.updateOne(
             {
@@ -20,7 +22,10 @@ const userPageAction = async (formData) => {
             {
                 displayName: pageFormData.displayName,
                 location: pageFormData.location,
-                bio: pageFormData.bio
+                bio: pageFormData.bio,
+                bgType: pageFormData.bgType,
+                bgColor:pageFormData.bgColor,
+
             })
         const data = JSON.parse(JSON.stringify(pageDoc))
         console.log('data==>', data)

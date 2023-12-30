@@ -21,6 +21,14 @@ const UserPageSchema = mongoose.Schema({
     bio: {
         type: String,
         default: ''
+    },
+    bgType: {
+        type: String,
+        default: 'color'
+    },
+    bgColor: {
+        type: String,
+        default: '#40862D'
     }
 }, { timestamps: true })
 
