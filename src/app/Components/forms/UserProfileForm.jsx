@@ -27,11 +27,12 @@ const UserProfileForm = ({ userPage, session }) => {
       <form action={saveUserProfile}>
         <div className="flex justify-center items-center bg-gray-300 py-16">
           <RadioToggler
+          defaultValue={'image'}
             options={[
               { value: "color", icon: "IoColorPalette", label: "Color" },
               { value: "image", icon: "FaImage", label: "Image" },
             ]}
-            onChange={() => {}}
+            
           />
         </div>
         <div className="flex justify-center -mb-12">

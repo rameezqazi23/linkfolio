@@ -20,7 +20,7 @@ label.input-label {
   @apply p-1 bg-white inline-flex;
 }
 
-.radio-togglers span {
+.radio-togglers div {
   @apply bg-white p-2 px-4 flex justify-center items-center gap-1 text-sm duration-300 ease-out;
 }
 
@@ -28,6 +28,6 @@ label.input-label {
   @apply hidden;
 }
 
-.radio-togglers input[type="radio"]:checked + span {
+.radio-togglers input[type="radio"]:checked + div {
   @apply bg-green-500 text-white;
 }
