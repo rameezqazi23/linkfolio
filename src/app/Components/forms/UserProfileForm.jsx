@@ -2,24 +2,24 @@
 import React from "react";
 import RadioToggler from "../formItems/RadioToggler";
 import Image from "next/image";
-import { FaSave } from "react-icons/fa";
 import userPageAction from "@/actions/userPageAction";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import SubmitButton from "../buttons/SubmitButton";
 
 const UserProfileForm = ({ userPage, session }) => {
-
-  
   const saveUserProfile = async (formData) => {
     console.log("save user profile==>", formData.get("displayName"));
-    const result = await userPageAction(formData);
 
-    if (result) {
-      toast.success("Successfully saved changes!");
-    } else {
-      toast.error("This didn't work.");
-    }
-
-    console.log("user page data", { result });
+    const promise = new Promise(async (resolve, reject) => {
+      const result = await userPageAction(formData);
+      if (result) resolve();
+      else reject();
+    });
+    toast.promise(promise, {
+      loading: "Saving...",
+      success: <b>Settings saved!</b>,
+      error: <b>Could not save.</b>,
+    });
   };
 
   return (
@@ -74,10 +74,13 @@ const UserProfileForm = ({ userPage, session }) => {
             cols="30"
             rows="2"
           ></textarea>
-          <button className="bg-green-500 w-full text-white text-sm mt-4 py-2 flex gap-2 justify-center items-center hover:gap-4 duration-200">
-            <FaSave size={18} />
-            Save Changes
-          </button>
+          <SubmitButton
+            className={
+              "bg-green-500 w-full text-white text-sm mt-4 py-2 flex justify-center items-center hover:gap-4 duration-200"
+            }
+          >
+            <span>Save</span>
+          </SubmitButton>
         </div>
       </form>
     </div>
