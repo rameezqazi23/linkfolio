@@ -5,7 +5,7 @@ import Image from "next/image";
 import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
-
+import { FaSave } from "react-icons/fa";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
@@ -24,6 +24,23 @@ const UserProfileForm = ({ userPage, session }) => {
       success: <b>Settings saved!</b>,
       error: <b>Could not save.</b>,
     });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    console.log(`image${Date.now()}-${file.name}`);
+    if (file) {
+      const data = new FormData();
+      data.set("file", file);
+      fetch("/api/upload", {
+        method: "POST",
+        body: data,
+      }).then((response) => {
+        response.json().then((link) => {
+          console.log("uploaded file link", link);
+        });
+      });
+    }
   };
 
   return (
@@ -47,7 +64,9 @@ const UserProfileForm = ({ userPage, session }) => {
             <div className="flex justify-center mt-4">
               {bgType === "color" && (
                 <div className="flex justify-center items-center gap-1 background-color bg-[#eeeded] px-2 py-1 rounded-lg shadow-lg">
-                  <span className="text-xs text-[#2c2f32] font-semibold">Background color:</span>
+                  <span className="text-xs text-[#2c2f32] font-semibold">
+                    Background color:
+                  </span>
                   <input
                     className="cursor-pointer outline-none border-none"
                     type="color"
@@ -62,10 +81,15 @@ const UserProfileForm = ({ userPage, session }) => {
               )}
               {bgType === "image" && (
                 <div className="cursor-pointer">
-                  <input type="file" name="" id="" />
-                  <button type="upload" className="outline-none bg-white px-2 py-2 text-xs text-[#2c2f32] hover:text-black duration-200 hover:z-10 hover:text-sm font-semibold shadow-lg rounded-lg">
+                  <label className="outline-none cursor-pointer bg-white px-2 py-2 text-xs text-[#2c2f32] hover:text-black duration-200 hover:z-10 hover:text-sm font-semibold shadow-lg rounded-lg">
+                    <input
+                      className="hidden"
+                      type="file"
+                      name="coverImage"
+                      onChange={handleImageUpload}
+                    />
                     Change Image
-                  </button>
+                  </label>
                 </div>
               )}
             </div>
@@ -113,10 +137,13 @@ const UserProfileForm = ({ userPage, session }) => {
           ></textarea>
           <SubmitButton
             className={
-              "bg-green-500 w-full text-white text-sm mt-4 py-2 flex justify-center items-center hover:gap-4 duration-200"
+              "bg-green-500 w-full text-white text-sm mt-4 py-2 flex justify-center items-center"
             }
           >
-            <span>Save</span>
+            <div className="flex gap-2 hover:gap-4 duration-200">
+              <FaSave size={18} />
+              <span>Save</span>
+            </div>
           </SubmitButton>
         </div>
       </form>

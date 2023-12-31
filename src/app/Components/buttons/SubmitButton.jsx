@@ -10,7 +10,7 @@ const SubmitButton = ({ children, className }) => {
       {pending && <p>Saving...</p>}
       {!pending && (
         <span className="flex gap-2">
-          <FaSave size={18} />
+          {/* <FaSave size={18} /> */}
           {children}
         </span>
       )}
