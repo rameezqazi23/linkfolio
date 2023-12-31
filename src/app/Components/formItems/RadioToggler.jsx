@@ -2,7 +2,7 @@ import React from "react";
 import { FaImage } from "react-icons/fa";
 import { IoColorPalette } from "react-icons/io5";
 
-const RadioToggler = ({ options, defaultValue }) => {
+const RadioToggler = ({ options, defaultValue, onChange }) => {
   return (
     <div className="radio-togglers">
       {options.map((option) => (
@@ -12,6 +12,9 @@ const RadioToggler = ({ options, defaultValue }) => {
             name="bgType"
             value={option.value}
             defaultChecked={defaultValue === option.value}
+            onChange={(e) => {
+              onChange(e.target.value);
+            }}
           />
           <div className="flex justify-center items-center">
             {option.value === "color" ? (

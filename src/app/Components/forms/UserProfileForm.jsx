@@ -1,14 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import RadioToggler from "../formItems/RadioToggler";
 import Image from "next/image";
 import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
-import { RiUploadCloud2Fill } from "react-icons/ri";
-import { BiColor } from "react-icons/bi";
+
 
 const UserProfileForm = ({ userPage, session }) => {
+  const [bgType, setBgType] = useState(userPage.bgType);
+  const [bgColor, setBgColor] = useState(userPage.bgColor);
+
   const saveUserProfile = async (formData) => {
     console.log("save user profile==>", formData.get("displayName"));
 
@@ -29,7 +31,7 @@ const UserProfileForm = ({ userPage, session }) => {
       <form action={saveUserProfile}>
         <div
           className="flex justify-center items-center py-16"
-          style={{ backgroundColor: userPage.bgColor }}
+          style={{ backgroundColor: bgColor }}
         >
           <div>
             <RadioToggler
@@ -38,21 +40,34 @@ const UserProfileForm = ({ userPage, session }) => {
                 { value: "color", icon: "IoColorPalette", label: "Color" },
                 { value: "image", icon: "FaImage", label: "Image" },
               ]}
+              onChange={(val) => {
+                setBgType(val);
+              }}
             />
-            <div className="flex justify-center mt-4 bg-white px-1 py-2">
-              {userPage.bgType === "color" && (
-                <div className="flex justify-center items-center gap-2 background-color">
-                  <span className="text-sm">Background color:</span>
+            <div className="flex justify-center mt-4">
+              {bgType === "color" && (
+                <div className="flex justify-center items-center gap-1 background-color bg-[#eeeded] px-2 py-1 rounded-lg shadow-lg">
+                  <span className="text-xs text-[#2c2f32] font-semibold">Background color:</span>
                   <input
                     className="cursor-pointer outline-none border-none"
                     type="color"
                     name="bgColor"
                     defaultValue={userPage.bgColor}
+                    onChange={(e) => {
+                      setBgColor(e.target.value);
+                    }}
                   />
                   {/* <BiColor size={26} className="cursor-pointer" /> */}
                 </div>
               )}
-              {userPage.bgType === "image" && <RiUploadCloud2Fill size={30} />}
+              {bgType === "image" && (
+                <div className="cursor-pointer">
+                  <input type="file" name="" id="" />
+                  <button type="upload" className="outline-none bg-white px-2 py-2 text-xs text-[#2c2f32] hover:text-black duration-200 hover:z-10 hover:text-sm font-semibold shadow-lg rounded-lg">
+                    Change Image
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
