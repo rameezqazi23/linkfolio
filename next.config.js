@@ -4,8 +4,11 @@ const nextConfig = {
         remotePatterns: [
             {
                 hostname: '*.googleusercontent.com',
-                
+
             },
+            {
+                hostname: 'linkfolio-files.s3.amazonaws.com'
+            }
         ],
     },
 }

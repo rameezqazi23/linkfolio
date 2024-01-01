@@ -6,8 +6,6 @@ import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
 import { FaCamera, FaSave } from "react-icons/fa";
-import { IoCloudUpload } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
@@ -16,8 +14,6 @@ const UserProfileForm = ({ userPage, session }) => {
   const [profileImage, setProfileImage] = useState(session?.user?.image);
 
   const saveUserProfile = async (formData) => {
-    // console.log("save user profile==>", formData.get("coverImage"));
-
     const promise = new Promise(async (resolve, reject) => {
       const result = await userPageAction(formData);
       if (result) resolve();
@@ -31,9 +27,10 @@ const UserProfileForm = ({ userPage, session }) => {
     });
   };
 
-  const handleUpload = (e, cbFn) => {
+  //custom upload function
+  const handleUpload = (e, callBackFn) => {
     const file = e.target.files?.[0];
-    console.log(`image${Date.now()}-${file.name}`);
+    // console.log(`image${Date.now()}-${file.name}`);
     if (file) {
       const promise = new Promise((resolve, reject) => {
         const data = new FormData();
@@ -45,7 +42,7 @@ const UserProfileForm = ({ userPage, session }) => {
           if (response.ok) {
             response.json().then((link) => {
               console.log("uploaded file link", link);
-              // setBgImage(link);
+              callBackFn(link);
               resolve(link);
             });
           } else {
@@ -56,18 +53,20 @@ const UserProfileForm = ({ userPage, session }) => {
 
       toast.promise(promise, {
         loading: "Uploading...",
-        success: <b>Cover image set!</b>,
-        error: <b>Could not save.</b>,
+        success: <b>Image uploaded!</b>,
+        error: <b>Could not upload.</b>,
       });
     }
   };
 
+  //userProfile cover image handler
   const handleCoverImageUpload = (e) => {
     handleUpload(e, (link) => {
       setBgImage(link);
     });
   };
 
+  //userProfile profile image handler
   const handleProfileImageUpload = (e) => {
     handleUpload(e, (link) => {
       setProfileImage(link);
@@ -136,21 +135,22 @@ const UserProfileForm = ({ userPage, session }) => {
           </div>
         </div>
         <div className="flex justify-center -mb-12">
-          <div className="relative bottom-10">
+          <div className="w-[128px] h-[128px] relative bottom-10 ">
             <Image
-              className="rounded-full cursor-pointer border-4 border-white shadow-sm"
-              src={session?.user?.image}
+              className="w-full h-full object-cover rounded-full cursor-pointer border-4 border-white shadow-xl bg-gray-100 backdrop-filter backdrop-blur-sm bg-opacity-20"
+              src={profileImage}
+              alt="avatar"
               width={128}
               height={128}
-              alt="avatar"
             />{" "}
-            <label className="absolute justify-center items-center bottom-0 right-4 bg-gray-800 rounded-full p-[7px] cursor-pointer shadow-2xl">
-              <FaCamera color="white" size={16} />
+            <input className="hidden" type="text" name="profileImage" defaultValue={profileImage} />
+            <label className="absolute justify-center items-center bottom-0 right-4 bg-[#2c2f32] rounded-full p-[7px] cursor-pointer shadow-2xl">
+              <FaCamera className="hover:w-5 hover:h-5 duration-200" color="white" size={16} />
               <input
                 onChange={handleProfileImageUpload}
                 className="hidden"
                 type="file"
-                name="profileImage"
+                // name="profileImage"
               />
             </label>
           </div>
