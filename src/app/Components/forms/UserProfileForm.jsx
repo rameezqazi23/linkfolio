@@ -6,6 +6,7 @@ import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
 import { FaSave } from "react-icons/fa";
+import { IoCloudUpload } from "react-icons/io5";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
@@ -32,16 +33,29 @@ const UserProfileForm = ({ userPage, session }) => {
     const file = e.target.files?.[0];
     console.log(`image${Date.now()}-${file.name}`);
     if (file) {
-      const data = new FormData();
-      data.set("file", file);
-      fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      }).then((response) => {
-        response.json().then((link) => {
-          console.log("uploaded file link", link);
-          setBgImage(link);
+      const promise = new Promise((resolve, reject) => {
+        const data = new FormData();
+        data.set("file", file);
+        fetch("/api/upload", {
+          method: "POST",
+          body: data,
+        }).then((response) => {
+          if (response.ok) {
+            response.json().then((link) => {
+              console.log("uploaded file link", link);
+              setBgImage(link);
+              resolve();
+            });
+          } else {
+            reject();
+          }
         });
+      });
+
+      toast.promise(promise, {
+        loading: "Uploading...",
+        success: <b>Cover image set!</b>,
+        error: <b>Could not save.</b>,
       });
     }
   };
@@ -50,7 +64,7 @@ const UserProfileForm = ({ userPage, session }) => {
     <div className="bg-white">
       <form action={saveUserProfile}>
         <div
-          className="flex justify-center items-center py-16 bg-cover bg-center"
+          className="flex justify-center items-center py-4 min-h-[300px] bg-cover bg-center"
           style={
             bgType === "color"
               ? { backgroundColor: bgColor }
@@ -73,7 +87,7 @@ const UserProfileForm = ({ userPage, session }) => {
                 className="hidden"
                 type="text"
                 name="bgImage"
-                value={bgImage}
+                defaultValue={bgImage}
               />
               {bgType === "color" && (
                 <div className="flex justify-center items-center gap-1 background-color bg-[#eeeded] px-2 py-1 rounded-lg shadow-lg">
