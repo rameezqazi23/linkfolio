@@ -31,7 +31,7 @@ export async function POST(req) {
             ContentType: file.type
 
         }))
-        const link = `https://${bucketName}.s3.amazon.com/${fileName}`
+        const link = `https://${bucketName}.s3.amazonaws.com/${fileName}`
 
         return Response.json(link);
     }

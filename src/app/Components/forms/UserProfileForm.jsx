@@ -10,15 +10,17 @@ import { FaSave } from "react-icons/fa";
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
   const [bgColor, setBgColor] = useState(userPage.bgColor);
+  const [bgImage, setBgImage] = useState(userPage.bgImage);
 
   const saveUserProfile = async (formData) => {
-    console.log("save user profile==>", formData.get("displayName"));
+    // console.log("save user profile==>", formData.get("coverImage"));
 
     const promise = new Promise(async (resolve, reject) => {
       const result = await userPageAction(formData);
       if (result) resolve();
       else reject();
     });
+
     toast.promise(promise, {
       loading: "Saving...",
       success: <b>Settings saved!</b>,
@@ -38,6 +40,7 @@ const UserProfileForm = ({ userPage, session }) => {
       }).then((response) => {
         response.json().then((link) => {
           console.log("uploaded file link", link);
+          setBgImage(link);
         });
       });
     }
@@ -47,8 +50,12 @@ const UserProfileForm = ({ userPage, session }) => {
     <div className="bg-white">
       <form action={saveUserProfile}>
         <div
-          className="flex justify-center items-center py-16"
-          style={{ backgroundColor: bgColor }}
+          className="flex justify-center items-center py-16 bg-cover bg-center"
+          style={
+            bgType === "color"
+              ? { backgroundColor: bgColor }
+              : { backgroundImage: `url(${bgImage})` }
+          }
         >
           <div>
             <RadioToggler
@@ -62,6 +69,12 @@ const UserProfileForm = ({ userPage, session }) => {
               }}
             />
             <div className="flex justify-center mt-4">
+              <input
+                className="hidden"
+                type="text"
+                name="bgImage"
+                value={bgImage}
+              />
               {bgType === "color" && (
                 <div className="flex justify-center items-center gap-1 background-color bg-[#eeeded] px-2 py-1 rounded-lg shadow-lg">
                   <span className="text-xs text-[#2c2f32] font-semibold">
@@ -85,7 +98,6 @@ const UserProfileForm = ({ userPage, session }) => {
                     <input
                       className="hidden"
                       type="file"
-                      name="coverImage"
                       onChange={handleImageUpload}
                     />
                     Change Image
