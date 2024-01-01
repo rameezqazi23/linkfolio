@@ -5,13 +5,15 @@ import Image from "next/image";
 import userPageAction from "@/actions/userPageAction";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
-import { FaSave } from "react-icons/fa";
+import { FaCamera, FaSave } from "react-icons/fa";
 import { IoCloudUpload } from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
   const [bgColor, setBgColor] = useState(userPage.bgColor);
   const [bgImage, setBgImage] = useState(userPage.bgImage);
+  const [profileImage, setProfileImage] = useState(session?.user?.image);
 
   const saveUserProfile = async (formData) => {
     // console.log("save user profile==>", formData.get("coverImage"));
@@ -29,7 +31,7 @@ const UserProfileForm = ({ userPage, session }) => {
     });
   };
 
-  const handleImageUpload = (e) => {
+  const handleUpload = (e, cbFn) => {
     const file = e.target.files?.[0];
     console.log(`image${Date.now()}-${file.name}`);
     if (file) {
@@ -43,8 +45,8 @@ const UserProfileForm = ({ userPage, session }) => {
           if (response.ok) {
             response.json().then((link) => {
               console.log("uploaded file link", link);
-              setBgImage(link);
-              resolve();
+              // setBgImage(link);
+              resolve(link);
             });
           } else {
             reject();
@@ -58,6 +60,18 @@ const UserProfileForm = ({ userPage, session }) => {
         error: <b>Could not save.</b>,
       });
     }
+  };
+
+  const handleCoverImageUpload = (e) => {
+    handleUpload(e, (link) => {
+      setBgImage(link);
+    });
+  };
+
+  const handleProfileImageUpload = (e) => {
+    handleUpload(e, (link) => {
+      setProfileImage(link);
+    });
   };
 
   return (
@@ -112,9 +126,9 @@ const UserProfileForm = ({ userPage, session }) => {
                     <input
                       className="hidden"
                       type="file"
-                      onChange={handleImageUpload}
+                      onChange={handleCoverImageUpload}
                     />
-                    Change Image
+                    Change background
                   </label>
                 </div>
               )}
@@ -122,13 +136,24 @@ const UserProfileForm = ({ userPage, session }) => {
           </div>
         </div>
         <div className="flex justify-center -mb-12">
-          <Image
-            className="rounded-full cursor-pointer border-4 border-white shadow-sm relative bottom-10"
-            src={session?.user?.image}
-            width={128}
-            height={128}
-            alt="avatar"
-          />{" "}
+          <div className="relative bottom-10">
+            <Image
+              className="rounded-full cursor-pointer border-4 border-white shadow-sm"
+              src={session?.user?.image}
+              width={128}
+              height={128}
+              alt="avatar"
+            />{" "}
+            <label className="absolute justify-center items-center bottom-0 right-4 bg-gray-800 rounded-full p-[7px] cursor-pointer shadow-2xl">
+              <FaCamera color="white" size={16} />
+              <input
+                onChange={handleProfileImageUpload}
+                className="hidden"
+                type="file"
+                name="profileImage"
+              />
+            </label>
+          </div>
         </div>
         <div className="p-4">
           <label className="input-label" htmlFor="nameInput">
