@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import RadioToggler from "../formItems/RadioToggler";
 import Image from "next/image";
-import userPageAction from "@/actions/userPageAction";
+import { saveUserDetails } from "@/actions/userPageAction";
+import { FaCamera, FaSave } from "react-icons/fa";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
-import { FaCamera, FaSave } from "react-icons/fa";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
@@ -15,7 +15,7 @@ const UserProfileForm = ({ userPage, session }) => {
 
   const saveUserProfile = async (formData) => {
     const promise = new Promise(async (resolve, reject) => {
-      const result = await userPageAction(formData);
+      const result = await saveUserDetails(formData);
       if (result) resolve();
       else reject();
     });
@@ -27,7 +27,7 @@ const UserProfileForm = ({ userPage, session }) => {
     });
   };
 
-  //custom upload function
+  //custom image upload function
   const handleUpload = (e, callBackFn) => {
     const file = e.target.files?.[0];
     // console.log(`image${Date.now()}-${file.name}`);

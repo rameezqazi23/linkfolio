@@ -5,7 +5,7 @@ import PAGE from '@/models/Page'
 import USER from '@/models/User'
 import mongoose from 'mongoose'
 
-const userPageAction = async (formData) => {
+export const saveUserDetails = async (formData) => {
     mongoose.connect(process.env.CONNECT_MONGO_URI)
     const session = await getServerSession(authOptions)
 
@@ -44,4 +44,23 @@ const userPageAction = async (formData) => {
     return false
 }
 
-export default userPageAction;
+export const saveSocialLinks = async (formData) => {
+    mongoose.connect(process.env.CONNECT_MONGO_URI)
+    const session = getServerSession(authOptions)
+
+    if (session) {
+        const buttonValues = {}
+        formData.forEach((val, key) => {
+            buttonValues[key] = val
+        })
+        await PAGE.updateOne(
+            { email: session?.user?.email },
+            { socialLinks: buttonValues }
+        )
+
+        return true;
+    }
+
+    return false;
+}
+

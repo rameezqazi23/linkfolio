@@ -33,6 +33,10 @@ const UserPageSchema = mongoose.Schema({
     bgImage: {
         type: String,
         default: ''
+    },
+    socialLinks: {
+        type: Object,
+        default: {}
     }
 }, { timestamps: true })
 

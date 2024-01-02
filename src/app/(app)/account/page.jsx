@@ -27,7 +27,7 @@ const Account = async () => {
       {userPage ? (
         <div>
           <UserProfileForm userPage={userPage} session={sessionData} />
-          <UserLinksForm />
+          <UserLinksForm userPage={userPage} session={sessionData} />
         </div>
       ) : (
         <AccountForm />
