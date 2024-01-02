@@ -7,14 +7,15 @@ import { MdAccountCircle, MdAnalytics } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import LogoutButton from "../buttons/LogoutButton";
 import { usePathname } from "next/navigation";
+import { FaLink } from "react-icons/fa";
 
 const AccountSidebar = ({ session }) => {
   const path = usePathname();
   console.log("Path name==>", path);
 
   return (
-    <div>
-      <Link href={"/account"} className="w-24 mx-auto pt-8">
+    <div className="fixed mt-4">
+      <Link href={"/account"} className="w-24 mx-auto">
         <Image
           className="rounded-full cursor-pointer hover:w-24 mx-auto duration-200"
           src={session?.user?.image}
@@ -54,6 +55,11 @@ const AccountSidebar = ({ session }) => {
           <IoMdArrowRoundBack size={18} />
           Back to home
         </Link>
+        <footer className="relative flex top-[250px] justify-center text-xs gap-1">
+          Powered by linkFolio
+          <FaLink className="text-green-400" size={13} />
+
+          </footer>
       </nav>
     </div>
   );

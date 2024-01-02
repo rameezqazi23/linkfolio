@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import mongoose from "mongoose";
 import UserProfileForm from "@/app/Components/forms/UserProfileForm";
+import UserLinksForm from "@/app/Components/forms/UserLinksForm";
 
 const Account = async () => {
   mongoose.connect(process.env.CONNECT_MONGO_URI);
@@ -22,13 +23,16 @@ const Account = async () => {
   console.log("UserPage data==>", userPage);
 
   return (
-    <div>
+    <>
       {userPage ? (
-        <UserProfileForm userPage={userPage} session={sessionData} />
+        <div>
+          <UserProfileForm userPage={userPage} session={sessionData} />
+          <UserLinksForm />
+        </div>
       ) : (
         <AccountForm />
       )}
-    </div>
+    </>
   );
 };
 
