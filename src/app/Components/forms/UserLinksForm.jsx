@@ -114,7 +114,6 @@ const UserLinksForm = ({ userPage, session }) => {
     allButtons.find((val2) => val2.key === val)
   );
 
-  // allButtons.find((button3) => button3.key === val);
   console.log("Button keys", pageSavedButtonKeys);
   console.log("Button info", pageSavedButtonsInfo);
   const [activeButtons, setActiveButtons] = useState(pageSavedButtonsInfo);
@@ -144,6 +143,12 @@ const UserLinksForm = ({ userPage, session }) => {
     });
   };
 
+  //handle delete selected fields
+  const handleDeleteSelectedFields = (button) => {
+    setActiveButtons([...activeButtons.filter((val) => val.key !== button)]);
+  };
+  console.log("Active buttons==>", activeButtons);
+
   return (
     <div className="bg-white mt-8 p-4">
       <form action={saveUserProfile}>
@@ -151,7 +156,10 @@ const UserLinksForm = ({ userPage, session }) => {
           Add Social Accounts
         </h2>
         {activeButtons.map((activeButton) => (
-          <div key={activeButton.key} className="flex items-center gap-2 mb-6 text-sm text-gray-700">
+          <div
+            key={activeButton.key}
+            className="flex items-center gap-2 mb-6 text-sm text-gray-700"
+          >
             <label className="flex w-36 gap-2 items-center">
               {activeButton.icon === "Email" && <MdEmail size={20} />}
               {activeButton.icon === "Phone" && <FaPhoneAlt size={20} />}
@@ -177,10 +185,15 @@ const UserLinksForm = ({ userPage, session }) => {
               className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
               type={activeButton.type}
               name={activeButton.key}
+              defaultValue={userPage.socialLinks[activeButton.key]}
               placeholder={activeButton.placeHolder}
             />
-            <FaRegTrashCan className="cursor-pointer hover:text-red-600 duration-200" size={20}/>
-
+            <div
+              className="cursor-pointer hover:text-red-600 duration-200"
+              onClick={() => handleDeleteSelectedFields(activeButton.key)}
+            >
+              <FaRegTrashCan size={20} />
+            </div>
           </div>
         ))}
 
