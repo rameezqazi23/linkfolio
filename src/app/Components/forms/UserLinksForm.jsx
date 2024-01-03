@@ -2,13 +2,16 @@
 import React, { useState } from "react";
 import {
   FaDiscord,
+  FaExternalLinkSquareAlt,
   FaFacebook,
   FaGithub,
+  FaGripLines,
   FaLinkedin,
   FaPhone,
   FaPhoneAlt,
   FaPlus,
   FaSave,
+  FaSort,
   FaTelegramPlane,
   FaTiktok,
   FaWhatsapp,
@@ -20,6 +23,7 @@ import { AiFillInstagram } from "react-icons/ai";
 import { saveSocialLinks } from "@/actions/userPageAction";
 import SubmitButton from "../buttons/SubmitButton";
 import toast from "react-hot-toast";
+import { ReactSortable } from "react-sortablejs";
 
 const allButtons = [
   {
@@ -106,6 +110,13 @@ const allButtons = [
     placeHolder: "https://x.com",
     type: "text",
   },
+  {
+    key: "other",
+    icon: "Other",
+    label: "Other",
+    placeHolder: "Add your link...",
+    type: "text",
+  },
 ];
 
 const UserLinksForm = ({ userPage, session }) => {
@@ -155,47 +166,61 @@ const UserLinksForm = ({ userPage, session }) => {
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
           Add Social Accounts
         </h2>
-        {activeButtons.map((activeButton) => (
-          <div
-            key={activeButton.key}
-            className="flex items-center gap-2 mb-6 text-sm text-gray-700"
-          >
-            <label className="flex w-36 gap-2 items-center">
-              {activeButton.icon === "Email" && <MdEmail size={20} />}
-              {activeButton.icon === "Phone" && <FaPhoneAlt size={20} />}
-              {activeButton.icon === "Instagram" && (
-                <AiFillInstagram size={20} />
-              )}
-              {activeButton.icon === "Github" && <FaGithub size={20} />}
-              {activeButton.icon === "LinkedIn" && <FaLinkedin size={20} />}
-              {activeButton.icon === "Facebook" && <FaFacebook size={20} />}
-              {activeButton.icon === "Discord" && <FaDiscord size={20} />}
-              {activeButton.icon === "Tiktok" && <FaTiktok size={20} />}
-              {activeButton.icon === "Youtube" && <FaYoutube size={20} />}
-              {activeButton.icon === "WhatsApp" && <FaWhatsapp size={20} />}
-              {activeButton.icon === "Telegram" && (
-                <FaTelegramPlane size={20} />
-              )}
-              {activeButton.icon === "Twitter" && (
-                <FaSquareXTwitter size={20} />
-              )}
-              <span>{activeButton.label}</span>
-            </label>
-            <input
-              className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
-              type={activeButton.type}
-              name={activeButton.key}
-              defaultValue={userPage.socialLinks[activeButton.key]}
-              placeholder={activeButton.placeHolder}
-            />
+        <ReactSortable
+          list={activeButtons}
+          setList={setActiveButtons}
+          animation={200}
+          delayOnTouchStart={true}
+          delay={2}
+        >
+          {activeButtons.map((activeButton) => (
             <div
-              className="cursor-pointer hover:text-red-600 duration-200"
-              onClick={() => handleDeleteSelectedFields(activeButton.key)}
+              key={activeButton.key}
+              className="flex items-center gap-2 mb-6 text-sm text-gray-700"
             >
-              <FaRegTrashCan size={20} />
+              <label className="flex w-48 gap-2 items-center">
+                <FaGripLines className="cursor-move text-gray-400" size={18} />
+
+                {activeButton.icon === "Email" && <MdEmail size={20} />}
+                {activeButton.icon === "Phone" && <FaPhoneAlt size={20} />}
+                {activeButton.icon === "Instagram" && (
+                  <AiFillInstagram size={20} />
+                )}
+                {activeButton.icon === "Github" && <FaGithub size={20} />}
+                {activeButton.icon === "LinkedIn" && <FaLinkedin size={20} />}
+                {activeButton.icon === "Facebook" && <FaFacebook size={20} />}
+                {activeButton.icon === "Discord" && <FaDiscord size={20} />}
+                {activeButton.icon === "Tiktok" && <FaTiktok size={20} />}
+                {activeButton.icon === "Youtube" && <FaYoutube size={20} />}
+                {activeButton.icon === "WhatsApp" && <FaWhatsapp size={20} />}
+                {activeButton.icon === "Telegram" && (
+                  <FaTelegramPlane size={20} />
+                )}
+                {activeButton.icon === "Twitter" && (
+                  <FaSquareXTwitter size={20} />
+                )}
+                {activeButton.icon === "Other" && (
+                  <FaExternalLinkSquareAlt size={20} />
+                )}
+
+                <span>{activeButton.label}</span>
+              </label>
+              <input
+                className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
+                type={activeButton.type}
+                name={activeButton.key}
+                defaultValue={userPage.socialLinks[activeButton.key]}
+                placeholder={activeButton.placeHolder}
+              />
+              <div
+                className="cursor-pointer hover:text-red-600 duration-200"
+                onClick={() => handleDeleteSelectedFields(activeButton.key)}
+              >
+                <FaRegTrashCan size={20} />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </ReactSortable>
 
         <div className="flex flex-wrap gap-2 mt-4 mb-8 border-t pt-4 border-b pb-8">
           {availableButtons.map((button) => (
@@ -216,6 +241,7 @@ const UserLinksForm = ({ userPage, session }) => {
               {button.icon === "WhatsApp" && <FaWhatsapp />}
               {button.icon === "Telegram" && <FaTelegramPlane />}
               {button.icon === "Twitter" && <FaSquareXTwitter />}
+              {button.icon === "Other" && <FaExternalLinkSquareAlt />}
 
               <span>{button.label}</span>
               <FaPlus />
