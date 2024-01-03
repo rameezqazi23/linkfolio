@@ -14,7 +14,7 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaRegTrashCan, FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { AiFillInstagram } from "react-icons/ai";
 import { saveSocialLinks } from "@/actions/userPageAction";
@@ -109,16 +109,17 @@ const allButtons = [
 ];
 
 const UserLinksForm = ({ userPage, session }) => {
+  const pageSavedButtonKeys = Object.keys(userPage?.socialLinks); //['key1',key2]
+  const pageSavedButtonsInfo = pageSavedButtonKeys.map((val) =>
+    allButtons.find((val2) => val2.key === val)
+  );
 
-    
-    const pageSavedButtonKeys = Object.keys(userPage?.socialLinks);
-    const pageSavedButtonsInfo = pageSavedButtonKeys.map((val) => {
-        allButtons.find((button3) => button3.key === val);
-    });
-    
-    const [activeButtons, setActiveButtons] = useState(pageSavedButtonsInfo);
-  
-    const addSocialButton = (button) => {
+  // allButtons.find((button3) => button3.key === val);
+  console.log("Button keys", pageSavedButtonKeys);
+  console.log("Button info", pageSavedButtonsInfo);
+  const [activeButtons, setActiveButtons] = useState(pageSavedButtonsInfo);
+
+  const addSocialButton = (button) => {
     console.log(`${button.key} button is selected`);
     setActiveButtons((prev) => [...prev, button]);
   };
@@ -126,7 +127,7 @@ const UserLinksForm = ({ userPage, session }) => {
   console.log(activeButtons);
 
   const availableButtons = allButtons.filter(
-    (button1) => !activeButtons.find((button2) => button1.key === button2?.key)
+    (button1) => !activeButtons.find((button2) => button1.key === button2.key)
   );
 
   const saveUserProfile = async (formData) => {
@@ -149,8 +150,8 @@ const UserLinksForm = ({ userPage, session }) => {
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">
           Add Social Accounts
         </h2>
-        {activeButtons.map((activeButton, index) => (
-          <div key={index} className="flex gap-2 mb-6 text-sm">
+        {activeButtons.map((activeButton) => (
+          <div key={activeButton.key} className="flex items-center gap-2 mb-6 text-sm text-gray-700">
             <label className="flex w-36 gap-2 items-center">
               {activeButton.icon === "Email" && <MdEmail size={20} />}
               {activeButton.icon === "Phone" && <FaPhoneAlt size={20} />}
@@ -178,6 +179,8 @@ const UserLinksForm = ({ userPage, session }) => {
               name={activeButton.key}
               placeholder={activeButton.placeHolder}
             />
+            <FaRegTrashCan className="cursor-pointer hover:text-red-600 duration-200" size={20}/>
+
           </div>
         ))}
 
