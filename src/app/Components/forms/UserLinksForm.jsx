@@ -109,7 +109,8 @@ const UserLinksForm = ({ userPage, session }) => {
           >
             {links.map((link) => (
               <div key={link.key} className="my-8 flex gap-4">
-                <div className="flex justify-center items-center my-auto w-96">
+                {/* left section */}
+                <div className="flex justify-center items-center my-auto w-[450px]">
                   <div>
                     <FaGripLines
                       className="handle cursor-move text-gray-400 mr-4"
@@ -156,8 +157,12 @@ const UserLinksForm = ({ userPage, session }) => {
                     </div>
                   </div>
                 </div>
+
+                {/* right section */}
                 <div>
-                  {/* {JSON.stringify(link.icon)} */}
+                  <label className="input-label" htmlFor="nameInput">
+                    Title
+                  </label>
                   <input
                     className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
                     type="text"
@@ -165,6 +170,9 @@ const UserLinksForm = ({ userPage, session }) => {
                     value={link.title}
                     onChange={(e) => handleInputChange(e, "title", link.key)}
                   />
+                  <label className="input-label" htmlFor="nameInput">
+                    Subtitle (optional)
+                  </label>
                   <input
                     className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
                     type="text"
@@ -172,7 +180,9 @@ const UserLinksForm = ({ userPage, session }) => {
                     value={link.subTitle}
                     onChange={(e) => handleInputChange(e, "subTitle", link.key)}
                   />
-
+                  <label className="input-label" htmlFor="nameInput">
+                    Link (url)
+                  </label>
                   <input
                     className="w-full  py-2 px-2 mb-2 outline-none border border-gray-200"
                     type="text"

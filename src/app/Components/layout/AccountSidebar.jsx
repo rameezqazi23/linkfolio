@@ -14,7 +14,8 @@ const AccountSidebar = ({ session }) => {
   console.log("Path name==>", path);
 
   return (
-    <div className="fixed mt-4">
+    <div className="mt-4">
+      
       <Link href={"/account"} className="w-24 mx-auto">
         <Image
           className="rounded-full cursor-pointer hover:w-24 mx-auto duration-200"
