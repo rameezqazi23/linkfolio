@@ -5,6 +5,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2";
 import { ReactSortable } from "react-sortablejs";
 import SubmitButton from "../buttons/SubmitButton";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const UserLinksForm = ({ userPage, session }) => {
   const [links, setLinks] = useState([]);
@@ -25,6 +26,10 @@ const UserLinksForm = ({ userPage, session }) => {
 
   console.log("social links==>", links);
 
+  const handleDeleteSelectedFields = (selectedField) => {
+    setLinks([...links.filter((val) => val.key !== selectedField)]);
+  };
+
   return (
     <div className="bg-white mt-8 p-4">
       <form>
@@ -44,7 +49,7 @@ const UserLinksForm = ({ userPage, session }) => {
         <div>
           <ReactSortable list={links} setList={setLinks} animation={200}>
             {links.map((link) => (
-              <div key={link.key} className="my-8 flex">
+              <div key={link.key} className="my-8 flex gap-4">
                 <div className="flex justify-center items-center my-auto w-96">
                   <div>
                     <FaGripLines
@@ -87,6 +92,12 @@ const UserLinksForm = ({ userPage, session }) => {
                     type="text"
                     placeholder="url"
                   />
+                </div>
+                <div
+                  onClick={() => handleDeleteSelectedFields(link.key)}
+                  className="flex justify-center items-center my-auto cursor-pointer hover:text-red-600 duration-200"
+                >
+                  <FaRegTrashCan size={20} />
                 </div>
               </div>
             ))}
