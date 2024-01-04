@@ -20,10 +20,10 @@ import {
 import { FaRegTrashCan, FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { AiFillInstagram } from "react-icons/ai";
-import { saveSocialLinks } from "@/actions/userPageAction";
+import { savePageButtons } from "@/actions/userPageAction";
+import { ReactSortable } from "react-sortablejs";
 import SubmitButton from "../buttons/SubmitButton";
 import toast from "react-hot-toast";
-import { ReactSortable } from "react-sortablejs";
 
 const allButtons = [
   {
@@ -142,7 +142,7 @@ const UserButtonsForm = ({ userPage, session }) => {
 
   const saveUserProfile = async (formData) => {
     const promise = new Promise(async (resolve, reject) => {
-      const result = await saveSocialLinks(formData);
+      const result = await savePageButtons(formData);
       if (result) resolve();
       else reject();
     });

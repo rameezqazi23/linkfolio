@@ -37,6 +37,10 @@ const UserPageSchema = mongoose.Schema({
     socialLinks: {
         type: Object,
         default: {}
+    },
+    userSocialLinks: {
+        type: Object,
+        default: []
     }
 }, { timestamps: true })
 

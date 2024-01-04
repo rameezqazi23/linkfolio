@@ -6,6 +6,7 @@ import { saveUserDetails } from "@/actions/userPageAction";
 import { FaCamera, FaSave } from "react-icons/fa";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
+import { handleUpload } from "@/app/libs/fileUpload";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);
@@ -25,38 +26,6 @@ const UserProfileForm = ({ userPage, session }) => {
       success: <b>Settings saved!</b>,
       error: <b>Could not save.</b>,
     });
-  };
-
-  //custom image upload function
-  const handleUpload = (e, callBackFn) => {
-    const file = e.target.files?.[0];
-    // console.log(`image${Date.now()}-${file.name}`);
-    if (file) {
-      const promise = new Promise((resolve, reject) => {
-        const data = new FormData();
-        data.set("file", file);
-        fetch("/api/upload", {
-          method: "POST",
-          body: data,
-        }).then((response) => {
-          if (response.ok) {
-            response.json().then((link) => {
-              console.log("uploaded file link", link);
-              callBackFn(link);
-              resolve(link);
-            });
-          } else {
-            reject();
-          }
-        });
-      });
-
-      toast.promise(promise, {
-        loading: "Uploading...",
-        success: <b>Image uploaded!</b>,
-        error: <b>Could not upload.</b>,
-      });
-    }
   };
 
   //userProfile cover image handler
@@ -101,6 +70,7 @@ const UserProfileForm = ({ userPage, session }) => {
                 type="text"
                 name="bgImage"
                 defaultValue={bgImage}
+                accept=".png, .jpg, .jpeg"
               />
               {bgType === "color" && (
                 <div className="flex justify-center items-center gap-1 background-color bg-[#eeeded] px-2 py-1 rounded-lg shadow-lg">
@@ -143,9 +113,19 @@ const UserProfileForm = ({ userPage, session }) => {
               width={128}
               height={128}
             />{" "}
-            <input className="hidden" type="text" name="profileImage" defaultValue={profileImage} />
+            <input
+              className="hidden"
+              type="text"
+              name="profileImage"
+              defaultValue={profileImage}
+              accept=".png, .jpg, .jpeg"
+            />
             <label className="absolute justify-center items-center bottom-0 right-4 bg-[#2c2f32] rounded-full p-[7px] cursor-pointer shadow-2xl">
-              <FaCamera className="hover:w-5 hover:h-5 duration-200" color="white" size={16} />
+              <FaCamera
+                className="hover:w-5 hover:h-5 duration-200"
+                color="white"
+                size={16}
+              />
               <input
                 onChange={handleProfileImageUpload}
                 className="hidden"

@@ -44,7 +44,7 @@ export const saveUserDetails = async (formData) => {
     return false
 }
 
-export const saveSocialLinks = async (formData) => {
+export const savePageButtons = async (formData) => {
     mongoose.connect(process.env.CONNECT_MONGO_URI)
     const session = getServerSession(authOptions)
 
@@ -62,5 +62,20 @@ export const saveSocialLinks = async (formData) => {
     }
 
     return false;
+}
+
+export const savePageLinks = async (links) => {
+    mongoose.connect(process.env.CONNECT_MONGO_URI)
+    const session = getServerSession(authOptions)
+    if (session) {
+        console.log("All links from server", links)
+        await PAGE.updateOne(
+            { email: session?.user?.email },
+            { userSocialLinks: links }
+        )
+    } else {
+        return false
+    }
+
 }
 
