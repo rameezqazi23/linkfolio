@@ -101,13 +101,18 @@ const UserLinksForm = ({ userPage, session }) => {
           </button>
         </div>
         <div>
-          <ReactSortable list={links} setList={setLinks} animation={200}>
+          <ReactSortable
+            list={links}
+            setList={setLinks}
+            animation={200}
+            handle={".handle"}
+          >
             {links.map((link) => (
               <div key={link.key} className="my-8 flex gap-4">
                 <div className="flex justify-center items-center my-auto w-96">
                   <div>
                     <FaGripLines
-                      className="cursor-move text-gray-400 mr-4"
+                      className="handle cursor-move text-gray-400 mr-4"
                       size={18}
                     />
                   </div>

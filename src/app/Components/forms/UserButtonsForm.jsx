@@ -170,6 +170,7 @@ const UserButtonsForm = ({ userPage, session }) => {
           list={activeButtons}
           setList={setActiveButtons}
           animation={200}
+          handle={'.handle'}
           // delayOnTouchStart={true}
           // delay={2}
         >
@@ -179,7 +180,7 @@ const UserButtonsForm = ({ userPage, session }) => {
               className="flex items-center gap-2 mb-6 text-sm text-gray-700"
             >
               <label className="flex w-48 gap-2 items-center">
-                <FaGripLines className="cursor-move text-gray-400" size={18} />
+                <FaGripLines className="handle cursor-move text-gray-400" size={18} />
 
                 {activeButton.icon === "Email" && <MdEmail size={20} />}
                 {activeButton.icon === "Phone" && <FaPhoneAlt size={20} />}
