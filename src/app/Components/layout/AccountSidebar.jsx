@@ -9,13 +9,12 @@ import LogoutButton from "../buttons/LogoutButton";
 import { usePathname } from "next/navigation";
 import { FaLink } from "react-icons/fa";
 
-const AccountSidebar = ({ session }) => {
+const AccountSidebar = ({ session, userPage }) => {
   const path = usePathname();
   console.log("Path name==>", path);
-
+  console.log(userPage);
   return (
     <div className="mt-4">
-      
       <Link href={"/account"} className="w-24 mx-auto">
         <Image
           className="rounded-full cursor-pointer hover:w-24 mx-auto duration-200"
@@ -25,12 +24,24 @@ const AccountSidebar = ({ session }) => {
           alt="avatar"
         />
       </Link>
-      <nav className="flex flex-col justify-center items-center mt-8 gap-4">
+      {userPage && (
+        <Link
+          target={"_blank"}
+          href={`/${userPage?.uri}`}
+          className="flex justify-center items-center cursor-pointer underline"
+        >
+          <FaLink className="text-green-400" size={16} />
+          <span className="hover:text-white duration-200">
+            /{userPage?.uri}
+          </span>
+        </Link>
+      )}
+      <nav className="flex flex-col items-center mt-8 gap-4">
         <Link
           className={
             path === "/account"
-              ? "flex justify-center items-center gap-2 text-green-500"
-              : "flex justify-center items-center gap-2"
+              ? "flex items-center gap-2 text-green-500"
+              : "flex items-center gap-2"
           }
           href={"/account"}
         >
@@ -40,8 +51,8 @@ const AccountSidebar = ({ session }) => {
         <Link
           className={
             path === "/analytics"
-              ? "flex justify-center items-center gap-2 text-green-500"
-              : "flex justify-center items-center gap-2"
+              ? "flex items-center gap-2 text-green-500"
+              : "flex items-center gap-2"
           }
           href={"/analytics"}
         >
@@ -59,8 +70,7 @@ const AccountSidebar = ({ session }) => {
         <footer className="relative flex top-[250px] justify-center text-xs gap-1">
           Powered by linkFolio
           <FaLink className="text-green-400" size={13} />
-
-          </footer>
+        </footer>
       </nav>
     </div>
   );

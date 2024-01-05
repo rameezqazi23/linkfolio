@@ -110,10 +110,10 @@ const UserLinksForm = ({ userPage, session }) => {
             {links.map((link) => (
               <div key={link.key} className="my-8 flex gap-4">
                 {/* left section */}
-                <div className="flex justify-center items-center my-auto w-[450px]">
-                  <div>
+                <div className="flex justify-center items-center my-auto w-[500px]">
+                  <div className="flex justify-center mx-auto">
                     <FaGripLines
-                      className="handle cursor-move text-gray-400 mr-4"
+                      className="handle  cursor-move text-gray-400 mr-4"
                       size={18}
                     />
                   </div>
@@ -146,13 +146,13 @@ const UserLinksForm = ({ userPage, session }) => {
                       />
                       <label
                         htmlFor={`icon${link.key}`}
-                        className="flex justify-center items-center gap-2 cursor-pointer"
+                        className="flex justify-center items-center gap-2 cursor-pointer text-sm"
                       >
                         <HiOutlineArrowPathRoundedSquare
                           className="hover:rotate-180 duration-300"
                           size={18}
                         />
-                        <span>Change icon</span>
+                        Change icon
                       </label>
                     </div>
                   </div>
