@@ -26,7 +26,8 @@ import {
 } from "react-icons/fa";
 import { FaRegTrashCan, FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { AiFillInstagram } from "react-icons/ai";
+import { AiFillInstagram, AiOutlineLike } from "react-icons/ai";
+import { FiShare } from "react-icons/fi";
 
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -91,9 +92,10 @@ const UserPage = async ({ params }) => {
 
           {userPage.location}
         </h3>
-        <div className="max-w-md text-center text-sm mx-auto mt-2">
+        <div className="max-w-md text-center text-sm mx-auto mt-2 px-8">
           <p>{userPage.bio}</p>
         </div>
+
         <div className="flex justify-center items-center mt-3 pb-8 gap-3">
           {userPage?.socialLinks &&
             Object.keys(userPage.socialLinks).map((buttonKey) => (
@@ -137,32 +139,38 @@ const UserPage = async ({ params }) => {
               </Link>
             ))}
         </div>
-        <div className="max-w-2xl mx-auto text-sm text-white grid md:grid-cols-2 gap-6 p-4 px-8">
+        <div className="max-w-3xl mx-auto text-sm text-white grid md:grid-cols-2 gap-6 p-4 px-8">
           {userPage.userSocialLinks &&
             userPage.userSocialLinks.map((link) => (
               <Link
-                className="p-2 bg-indigo-950 flex rounded-xl"
+                className="p-2 bg-indigo-950 flex"
                 key={link.key}
                 href={`${link.url}`}
               >
-                <div className="relative w-14 h-14 aspect-square -left-6">
+                <div className="rounded-full justify-center relative -left-6 my-auto">
                   {link.icon ? (
                     <Image
-                      className="rounded-full"
-                      src={`${link.icon}`}
-                      width={42}
-                      height={42}
-                      alt="icon"
+                      className="aspect-square object-cover rounded-full cursor-pointer"
+                      alt="logo"
+                      width={70}
+                      height={70}
+                      src={link.icon}
                     />
                   ) : (
-                    <div className="bg-[#2c2f32] rounded-full p-3">
-                      <FaLink className="text-gray-200" size={28} />
+                    <div className="bg-gray-200 backdrop-filter backdrop-blur-md bg-opacity-20 rounded-full p-3">
+                      <FaLink className="text-gray-200" size={32} />
                     </div>
                   )}
                 </div>
-                <div>
-                  <h1>{link.title}</h1>
-                  <p className="text-gray-400">{link.subTitle}</p>
+                <div className="w-full">
+                  <div className="flex justify-between items-center">
+                    <h4>{link.title}</h4>
+                    <div className="flex gap-2">
+                      <AiOutlineLike />
+                      <FiShare />
+                    </div>
+                  </div>
+                  <p className="text-gray-400 overflow-hidden h-10">{link.subTitle}</p>
                 </div>
               </Link>
             ))}
