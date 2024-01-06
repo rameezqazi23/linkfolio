@@ -11,7 +11,7 @@ import PAGE from '@/models/Page'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Link Folio',
+  title: 'User Page',
   description: 'Organize Your links in one place',
 }
 
