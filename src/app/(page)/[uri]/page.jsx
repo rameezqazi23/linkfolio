@@ -1,5 +1,6 @@
 import PAGE from "@/models/Page";
 import USER from "@/models/User";
+import EVENT from "@/models/Event";
 import mongoose from "mongoose";
 import React from "react";
 import Image from "next/image";
@@ -42,7 +43,7 @@ const buttonIcons = {
 };
 
 const buttonRedirectLink = (key, val) => {
-  if (key === "mobile") {
+  if (key === "phone") {
     return `tel:${val}`;
   }
   if (key === "email") {
@@ -53,22 +54,21 @@ const buttonRedirectLink = (key, val) => {
 
 const UserPage = async ({ params }) => {
   mongoose.connect(process.env.CONNECT_MONGO_URI);
+
   const uri = params.uri;
   const userPage = await PAGE.findOne({ uri });
   console.log(userPage);
   const user = await USER.findOne({ email: userPage?.owner });
   console.log(user);
 
-  //   const link = userPage.socialLinks.map((link)=>link)
+  await EVENT.create({
+    uri: uri,
+    type: "view",
+  });
+
   return (
     <>
       <div className="text-[#eeeded] bg-gradient-to-b from-gray-900 via-purple-900 to-violet-600 min-h-screen">
-        {/* <Image
-        src={`${userPage?.bgImage}`}
-        width={200}
-        height={200}
-        alt="profile"
-      /> */}
         <div
           className="h-40 bg-cover bg-center"
           style={
@@ -151,7 +151,9 @@ const UserPage = async ({ params }) => {
           {userPage?.userSocialLinks &&
             userPage?.userSocialLinks.map((link) => (
               <Link
+                ping={`${process.env.URL}/api/click?url=${btoa(link.url)}`}
                 className="p-2 bg-indigo-950 flex"
+                target={"_blank"}
                 key={link.key}
                 href={`${link.url}`}
               >
