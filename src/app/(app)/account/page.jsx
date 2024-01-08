@@ -21,7 +21,7 @@ const Account = async () => {
     return redirect("/");
   }
   const userPage = await PAGE.findOne({ owner: sessionData?.user?.email });
-  console.log("UserPage data==>", userPage);
+  // console.log("UserPage data==>", userPage);
 
   return (
     <>

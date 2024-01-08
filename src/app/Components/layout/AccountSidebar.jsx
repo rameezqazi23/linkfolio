@@ -11,8 +11,8 @@ import { FaLink } from "react-icons/fa";
 
 const AccountSidebar = ({ session, userPage }) => {
   const path = usePathname();
-  console.log("Path name==>", path);
-  console.log(userPage);
+  // console.log("Path name==>", path);
+  // console.log(userPage);
   return (
     <div className="mt-4">
       <Link href={"/account"} className="w-24 mx-auto">

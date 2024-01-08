@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.9",
     "@aws-sdk/client-s3": "^3.484.0",
+    "date-fns": "^3.1.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
     "next": "14.0.4",
@@ -20,7 +21,8 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.12.0",
     "react-loader-spinner": "^6.1.6",
-    "react-sortablejs": "^6.1.4"
+    "react-sortablejs": "^6.1.4",
+    "recharts": "^2.10.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

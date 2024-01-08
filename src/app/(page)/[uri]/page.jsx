@@ -63,6 +63,7 @@ const UserPage = async ({ params }) => {
 
   await EVENT.create({
     uri: uri,
+    page: uri,
     type: "view",
   });
 
@@ -151,7 +152,9 @@ const UserPage = async ({ params }) => {
           {userPage?.userSocialLinks &&
             userPage?.userSocialLinks.map((link) => (
               <Link
-                ping={`${process.env.URL}/api/click?url=${btoa(link.url)}`}
+                ping={`${process.env.URL}/api/click?url=${btoa(
+                  link.url
+                )}&page=${userPage.uri}`}
                 className="p-2 bg-indigo-950 flex"
                 target={"_blank"}
                 key={link.key}
