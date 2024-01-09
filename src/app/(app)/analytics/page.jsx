@@ -100,35 +100,37 @@ const AnalyticsPage = async () => {
         {user?.userSocialLinks.map((link) => (
           <div
             key={link.key}
-            className="flex gap-6 items-center border-t border-gray-200 py-4"
+            className="flex flex-wrap gap-6 items-center justify-between border-t border-gray-200 py-4"
           >
-            {/* {JSON.stringify(
-              totalLinkClicks.filter((click) => click.uri === link.url).length
-            )} */}
-            <div>
-              <FaLink className="text-green-400" size={22} />
+            <div className="flex gap-6 items-center">
+              <div>
+                <FaLink className="text-green-400" size={22} />
+              </div>
+              <div className="grow">
+                <h2 className="text-lg">{link.title || "No title"}</h2>
+                <p className="text-gray-500 text-sm">
+                  {link.subTitle || "No subtitle"}
+                </p>
+                <a
+                  target="_blank"
+                  className="text-blue-500 text-xs hover:text-green-500 duration-200"
+                  href={link.url}
+                >
+                  {link.url}
+                </a>
+              </div>
             </div>
-            <div className="grow">
-              <h2 className="text-lg">{link.title || "No title"}</h2>
-              <p className="text-gray-500 text-sm">
-                {link.subTitle || "No subtitle"}
-              </p>
-              <a
-                target="_blank"
-                className="text-blue-500 text-xs hover:text-green-500 duration-200"
-                href={link.url}
-              >
-                {link.url}
-              </a>
-            </div>
-            <div>
-              <div className="flex items-center justify-between border-b mb-2 text-gray-500">
+            
+            <div className="flex md:flex-col gap-10 md:gap-0 text-sm md:text-base justify-between">
+
+              <div className="flex items-center justify-between md:border-b mb-2 text-gray-500">
                 <p className="text-sm font-bold uppercase">Clicks</p>
                 <IoAnalyticsSharp />
               </div>
+
               <div className="flex justify-between gap-4">
                 <p>Today: </p>
-                <p className="text-xl text-black">
+                <p className="text-base md:text-xl text-black">
                   {
                     totalLinkClicks.filter(
                       (click) =>
@@ -137,9 +139,10 @@ const AnalyticsPage = async () => {
                   }
                 </p>
               </div>
+
               <div className="flex justify-between gap-4">
                 <p>All time: </p>
-                <p className="text-xl text-black">
+                <p className="text-base md:text-xl text-black">
                   {
                     totalLinkClicks.filter((click) => click.uri === link.url)
                       .length
