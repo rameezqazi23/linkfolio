@@ -18,6 +18,7 @@ import {
 import AnalyticsChart from "@/app/Components/charts/AnalyticsChart";
 import { FaLink } from "react-icons/fa";
 import { format, isToday } from "date-fns";
+import { IoAnalyticsSharp } from "react-icons/io5";
 
 const AnalyticsPage = async () => {
   mongoose.connect(process.env.CONNECT_MONGO_URI);
@@ -45,30 +46,32 @@ const AnalyticsPage = async () => {
     uri: user?.userSocialLinks.map((link) => link.url),
   });
 
-  const groupedViews = await EVENT.aggregate(
-    [
-      {
-        $match: {
-          type: "view",
-          uri: user?.uri,
-        },
+  const groupedViews = await EVENT.aggregate([
+    {
+      $match: {
+        type: "view",
+        uri: user?.uri,
       },
-      {
-        $group: {
-          _id: {
-            $dateToString: {
-              date: "$createdAt",
-              format: "%Y-%m-%d",
-            },
-          },
-          count: {
-            $count: {},
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: {
+            date: "$createdAt",
+            format: "%Y-%m-%d",
           },
         },
+        count: {
+          $count: {},
+        },
       },
-    ],
-    { $order: "-_id" }
-  );
+    },
+    {
+      $sort: {
+        _id: 1,
+      },
+    },
+  ]);
 
   const totalLinkClicks = await EVENT.find({
     type: "click",
@@ -115,15 +118,16 @@ const AnalyticsPage = async () => {
                 className="text-blue-500 text-xs hover:text-green-500 duration-200"
                 href={link.url}
               >
-                Checkout
+                {link.url}
               </a>
             </div>
             <div>
-              <h3 className="text-gray-500 text-sm font-bold border-b">
-                Clicks
-              </h3>
-              <div className="flex gap-4">
-                <span>Today: </span>
+              <div className="flex items-center justify-between border-b mb-2 text-gray-500">
+                <p className="text-sm font-bold uppercase">Clicks</p>
+                <IoAnalyticsSharp />
+              </div>
+              <div className="flex justify-between gap-4">
+                <p>Today: </p>
                 <p className="text-xl text-black">
                   {
                     totalLinkClicks.filter(
@@ -133,7 +137,7 @@ const AnalyticsPage = async () => {
                   }
                 </p>
               </div>
-              <div className="flex gap-4">
+              <div className="flex justify-between gap-4">
                 <p>All time: </p>
                 <p className="text-xl text-black">
                   {
