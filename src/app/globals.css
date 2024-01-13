@@ -40,3 +40,10 @@ label.input-label {
   opacity: 0.3;
   @apply duration-200 bg-gray-500 text-white;
 }
+
+input#navCb ~ aside {
+  left: 0;
+}
+input#navCb ~ .backdrop {
+  display: flex;
+}

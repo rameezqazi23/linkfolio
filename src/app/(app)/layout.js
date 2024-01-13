@@ -28,13 +28,12 @@ export default async function AppLayout({ children }) {
       <body className={inter.className}>
         <Toaster />
         <main className='md:flex min-h-screen'>
-          <div className='md:hidden px-6 mt-2'>
-            <button className='border border-gray-400 p-2 rounded-xl'>
-              <RiMenuUnfoldFill size={26}/>
-
-            </button>
-          </div>
-          <aside className="bg-[#2c2f32] hidden text-gray-300 w-48 p-4 shadow-lg fixed md:static top-0 left-0 bottom-0 z-20">
+          <label htmlFor='navCb' className='md:hidden inline-block mx-6 mt-2 border border-gray-400 p-2 rounded-xl'>
+            <RiMenuUnfoldFill size={26} />
+          </label>
+          <input id='navCb' type='checkbox' />
+          <label htmlFor='navCb' className='hidden backdrop fixed inset-0 bg-black/80 z-10'></label>
+          <aside className="bg-[#2c2f32] text-gray-300 w-48 p-4 shadow-lg fixed md:static top-0 -left-48 bottom-0 z-20">
             <div className='sticky top-0'>
               <AccountSidebar session={session} userPage={userPage} />
             </div>
