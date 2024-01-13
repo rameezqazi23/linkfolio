@@ -41,9 +41,9 @@ label.input-label {
   @apply duration-200 bg-gray-500 text-white;
 }
 
-input#navCb ~ aside {
+input#navCb:checked ~ aside {
   left: 0;
 }
-input#navCb ~ .backdrop {
-  display: flex;
+input#navCb:checked ~ .backdrop {
+  display: block;
 }
