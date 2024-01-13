@@ -39,7 +39,7 @@ export default async function AppLayout({ children }) {
               <AccountSidebar session={session} userPage={userPage} />
             </div>
           </aside>
-          <div className='w-full md:px-16 px-0 mt-2'>
+          <div className='w-full md:px-16 px-0 mt-3'>
             {children}
           </div>
         </main>

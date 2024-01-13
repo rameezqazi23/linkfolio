@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FaGripLines, FaLink, FaPlus, FaSave } from "react-icons/fa";
 import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2";
+import { RxDragHandleDots2 } from "react-icons/rx";
 import { ReactSortable } from "react-sortablejs";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { handleUpload } from "@/app/libs/fileUpload";
@@ -108,13 +109,13 @@ const UserLinksForm = ({ userPage, session }) => {
             handle={".handle"}
           >
             {links.map((link) => (
-              <div key={link.key} className="my-8 flex gap-4">
+              <div key={link.key} className="my-8 flex gap-4  md:text-base text-xs">
                 {/* left section */}
                 <div className="flex justify-center items-center my-auto w-[500px]">
                   <div className="flex justify-center mx-auto">
-                    <FaGripLines
+                    <RxDragHandleDots2
                       className="handle  cursor-move text-gray-400 mr-4"
-                      size={18}
+                      size={22}
                     />
                   </div>
                   <div className="text-center">
