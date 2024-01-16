@@ -21,15 +21,17 @@ const Account = async () => {
     return redirect("/");
   }
   const userPage = await PAGE.findOne({ owner: sessionData?.user?.email });
-  // console.log("UserPage data==>", userPage);
+
+  //Convert it to JSON manually before parsing it to the props
+  const leanPage = JSON.parse(JSON.stringify(userPage));
 
   return (
     <>
       {userPage ? (
         <div>
-          <UserProfileForm userPage={userPage} session={sessionData} />
-          <UserButtonsForm userPage={userPage} session={sessionData} />
-          <UserLinksForm userPage={userPage} session={sessionData} />
+          <UserProfileForm userPage={leanPage} session={sessionData} />
+          <UserButtonsForm userPage={leanPage} session={sessionData} />
+          <UserLinksForm userPage={leanPage} session={sessionData} />
         </div>
       ) : (
         <AccountForm />

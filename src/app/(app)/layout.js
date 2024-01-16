@@ -21,6 +21,9 @@ export default async function AppLayout({ children }) {
   await mongoose.connect(process.env.CONNECT_MONGO_URI)
   const session = await getServerSession(authOptions)
   const userPage = await PAGE.findOne({ owner: session?.user?.email })
+  
+  //Convert it to JSON manually before parsing it to the props
+  const leanPage = JSON.parse(JSON.stringify(userPage))
 
 
   return (
@@ -32,11 +35,11 @@ export default async function AppLayout({ children }) {
             <RiMenuUnfoldFill size={22} />
             <span>menu</span>
           </label>
-          <input id='navCb' type='checkbox' className='hidden'/>
+          <input id='navCb' type='checkbox' className='hidden' />
           <label htmlFor='navCb' className='hidden backdrop backdrop-filter backdrop-blur-sm bg-opacity-30 fixed inset-0 bg-black z-10'></label>
           <aside className="bg-[#2c2f32] text-gray-300 w-48 p-4 shadow-lg fixed md:static top-0 -left-48 bottom-0 z-20 transition-all duration-300">
             <div className='sticky top-0'>
-              <AccountSidebar session={session} userPage={userPage} />
+              <AccountSidebar session={session} userPage={leanPage} />
             </div>
           </aside>
           <div className='w-full md:px-16 px-0 mt-3'>
