@@ -6,8 +6,8 @@ export async function POST(req) {
     const url = new URL(req.url)
     const reqUrl = atob(url.searchParams.get('url'))
     const userUri = url.searchParams.get('page')
-    console.log("Request url", reqUrl)
-    console.log("Request url", userUri)
+    // console.log("Request url", reqUrl)
+    // console.log("Request url", userUri)
 
     await EVENT.create({
         type: 'click',

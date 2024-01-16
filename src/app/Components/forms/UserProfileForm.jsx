@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import RadioToggler from "../formItems/RadioToggler";
-import Image from "next/image";
 import { saveUserDetails } from "@/actions/userPageAction";
 import { FaCamera, FaSave } from "react-icons/fa";
+import { handleUpload } from "@/app/libs/fileUpload";
+import RadioToggler from "../formItems/RadioToggler";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import SubmitButton from "../buttons/SubmitButton";
-import { handleUpload } from "@/app/libs/fileUpload";
 
 const UserProfileForm = ({ userPage, session }) => {
   const [bgType, setBgType] = useState(userPage.bgType);

@@ -13,12 +13,18 @@ const Navbar = async () => {
       <header className="bg-white backdrop-filter backdrop-blur-lg bg-opacity-70 border-b border-b-[#e6ebf4] py-6">
         <div className="max-w-4xl mx-auto flex justify-between px-8">
           <div className="flex gap-10">
-            <Link className="flex items-center gap-2 text-2xl font-semibold" href={"/"}>
+            <Link
+              className="flex items-center gap-2 text-2xl font-semibold"
+              href={"/"}
+            >
               <FaLink className="text-green-400" size={25} />
               <span className="bg-green-400 px-3">Link</span>Folio
             </Link>
             <nav className="flex items-center gap-4 text-slate-500 text-sm">
-              <Link className="hover:text-green-500 duration-200" href={"/about"}>
+              <Link
+                className="hover:text-green-500 duration-200"
+                href={"/about"}
+              >
                 About
               </Link>
               <Link

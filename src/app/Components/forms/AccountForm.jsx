@@ -14,7 +14,7 @@ const AccountForm = ({ searchParams }) => {
 
     const result = await getUsername(formData);
     console.log("check result==>", result);
-    
+
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);

@@ -3,19 +3,10 @@ import mongoose from "mongoose";
 import EVENT from "@/models/Event";
 import PAGE from "@/models/Page";
 import USER from "@/models/User";
+import AnalyticsChart from "@/app/Components/charts/AnalyticsChart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from "recharts";
-import AnalyticsChart from "@/app/Components/charts/AnalyticsChart";
 import { FaLink } from "react-icons/fa";
 import { format, isToday } from "date-fns";
 import { IoAnalyticsSharp } from "react-icons/io5";
@@ -120,9 +111,8 @@ const AnalyticsPage = async () => {
                 </a>
               </div>
             </div>
-            
-            <div className="flex md:flex-col gap-10 md:gap-0 text-sm md:text-base justify-between">
 
+            <div className="flex md:flex-col gap-10 md:gap-0 text-sm md:text-base justify-between">
               <div className="flex items-center justify-between md:border-b mb-2 text-gray-500">
                 <p className="text-sm font-bold uppercase">Clicks</p>
                 <IoAnalyticsSharp />

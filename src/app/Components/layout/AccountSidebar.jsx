@@ -3,9 +3,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import LogoutButton from "../buttons/LogoutButton";
 import { MdAccountCircle, MdAnalytics } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import LogoutButton from "../buttons/LogoutButton";
 import { usePathname } from "next/navigation";
 import { FaLink } from "react-icons/fa";
 

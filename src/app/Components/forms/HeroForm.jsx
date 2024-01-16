@@ -1,7 +1,7 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
 const HeroForm = ({ user }) => {
   const [userName, setUserName] = useState("");
